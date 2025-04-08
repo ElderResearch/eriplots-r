@@ -1,0 +1,30 @@
+Package: eriplots
+Title: Simple, clean plotting tools
+Version: 0.1.0
+Authors@R: c(
+    person("Tom", "Shafer",     , "tom.shafer@elderresearch.com", c("aut", "cre")),
+    person("Robert", "Robison", , "robert.robison@elderresearch.com", "aut"),
+    person("Elder Research",  , , "support@elderresearch.com", "cph"))
+Description:
+    The eriplots package provides a collection of tools for creating clean
+    and consistent plots using ggplot2 and base R graphics. The package
+    also provides a standardized theme and tools for saving figures that
+    make it easier to follow good practices.
+License: GPL (>= 3) + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    ggplot2,
+    lemon,
+    scales
+Depends:
+    R (>= 3.5)
+VignetteBuilder: knitr
+Suggests:
+    knitr,
+    png,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

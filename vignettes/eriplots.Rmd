@@ -1,0 +1,176 @@
+---
+title: "Introduction to eriplots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{eriplots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 5, 
+  fig.height = 3, 
+  fig.dpi = 192, 
+  fig.align = "center", 
+  out.width = 480
+)
+```
+
+```{r setup}
+library(ggplot2)
+library(eriplots)
+```
+
+*eriplots* is an R package that produces nice-looking figures for
+analysis, presentations, and reports using *ggplot2*. The package's
+contributions can be organised into three categories:
+
+1.  Overall style adjustments
+2.  Helpers for saving raster (e.g., PNG) and vector (e.g., PDF) figures
+3.  Elder Research color palettes
+
+## Overall style adjustments
+
+*eriplots* provides several styling adjustments for users:
+
+-   A clean, minimal theme to reduce clutter
+-   Theme "profiles" that tailor settings for different media
+    (presentation, document, etc.)
+-   Proper minus signs for continuous scales with negative values
+
+### Opt-in vs. default
+
+These style adjustments can be applied in two ways. First, we can use
+the `eriplot()` function to create a plot with the various settings
+applied automatically:
+
+```{r}
+# Make example per-manufacturer data
+plotdata <- split(mpg, ~manufacturer)
+plotdata <- sapply(plotdata, \(x) mean(x$cty) - mean(mpg$cty))
+plotdata <- data.frame(manufacturer = names(plotdata), cty = plotdata)
+plotdata$manufacturer <- with(plotdata, reorder(factor(manufacturer), cty))
+
+eriplot(plotdata, aes(cty, manufacturer, fill = cty)) +
+  geom_col(color = "black", linewidth = 0.2) +
+  scale_fill_viridis_c() + 
+  scale_x_continuous(breaks = seq(-6, 9, 3), limits = c(-6 ,9)) + 
+  coord_capped_cart()
+```
+
+Or, we can continue to use *ggplot2* directly and add the various pieces
+manually:
+
+```{r}
+ggplot(plotdata, aes(cty, manufacturer, fill = cty)) +
+  geom_col(color = "black", linewidth = 0.2) +
+  scale_fill_viridis_c() +
+  scale_x_continuous(breaks = seq(-6, 9, 3), limits = c(-6 ,9)) + 
+  format_minus_signs() +
+  coord_capped_cart() + 
+  theme_eri()
+```
+
+In this way, `eriplot()` acts as a wrapper to automatically set options
+from `theme_eri()` and `format_minus_signs()`.
+
+### Customizing default options
+
+When using `eriplot()`, three options can be set via `options()`. These
+are the defaults:
+
+-   `eriplots.eriplot.format_minus_signs = TRUE`
+-   `eriplots.eriplot.theme.apply_eri_theme = TRUE`
+-   `eriplots.eriplot.theme.default_profile = "none"`
+
+### Using the ERI theme everywhere
+
+The base ERI theme can be set as the default by calling
+`ggplot2::theme_set()` as usual:
+
+``` r
+theme_set(theme_eri())
+```
+
+As demonstrated above, it can also be composed with individual plots.
+
+## Helpers for saving figures
+
+The *eriplots* package also includes the function `save_figures()`,
+which works with ERI theme profiles to save figures at sizes that work
+well for a given destination format (presentation or document). By
+default, `save_figures()` will attempt to create raster (PNG) and vector
+(PDF) versions of your plot at default sizes and resolutions, but these
+settings can be customized as needed. (And `ggplot2::ggsave()` will
+still work just fine, too.)
+
+```{r, eval=FALSE}
+# Create figure
+eriplot(plotdata, aes(cty, manufacturer, fill = cty)) +
+  geom_col(color = "gray10") +
+  scale_fill_viridis_c() +
+  theme_eri(profile = "document")
+
+# Save example.pdf and example.png
+save_figures("example.png", formats = c("pdf", "png"))
+```
+
+Raster figures are saved at 300 DPI by default for high-quality,
+high-DPI applications. If [optipng](https://optipng.sourceforge.net/) is
+available, e.g., via `brew install optipng`, PNG file sizes will also be
+optimized automatically.
+
+## Elder Research color palettes
+
+The package also bundles a color palette derived from [Elder
+Research](https://www.elderresearch.com)'s brand guidelines by
+[R. Robison](https://www.linkedin.com/in/robert-robison/). The colors
+are available directly from the `eri_colors()` function:
+
+```{r}
+# All colors
+eri_colors()
+
+# Specific colors
+eri_colors("darkred", "darkred", "lightblue")
+
+# Specific colors with specified names
+eri_colors(A = "darkred", B = "lightblue")
+```
+
+A palette is also available via `eri_palette()`. One can specify a fixed
+number of colors or also provide names, which is helpful when working
+with `ggplot2::scale_color_manual()`, for example:
+
+```{r}
+# Fixed number of colors
+eri_palette(n = 3)
+
+# Include names
+eri_palette(n = 3, names = c("A", "B", "C"))
+```
+
+### Using the palettes with ggplot2
+
+The palettes can be integrated directly via, e.g., `scale_fill_manual()`
+for discrete sequences:
+
+```{r}
+eriplot(plotdata, aes(cty, manufacturer, fill = manufacturer)) +
+  geom_col(color = "gray10") +
+  scale_fill_manual(guide = "none", values = eri_palette(n = 15, recycle = TRUE))
+```
+
+Or `scale_fill_gradient()`, et al., for continuous sequences:
+
+```{r}
+eriplot(plotdata, aes(cty, manufacturer, fill = cty)) +
+  geom_col(color = "gray10") +
+  scale_fill_gradient2(
+    low = eri_colors("darkred"),
+    high = eri_colors("darkblue")
+  )
+```
