@@ -58,9 +58,6 @@ jobs:
           path: coverage.html
           if-no-files-found: error
 
-      - name: Install package
-        run: R CMD INSTALL .
-
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@v4
