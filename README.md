@@ -1,5 +1,7 @@
 # eriplots: Simple Plotting Utilities for R
 
+[![R-CMD-check](https://github.com/ElderResearch/eriplots-r/actions/workflows/ci.yml/badge.svg)](https://github.com/ElderResearch/eriplots-r/actions/workflows/ci.yml)
+
 The *[eriplots][]* library for R makes it a little easier to
 create clean, client-ready figures using [ggplot2][] and base R
 graphics, inspired by *[Trees, maps, and theorems][tmth]* among
