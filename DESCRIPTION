@@ -1,6 +1,6 @@
 Package: eriplots
 Title: Simple, Clean Plotting Tools
-Version: 0.1.1
+Version: 0.1.1.9000
 Authors@R: c(
     person("Tom", "Shafer",     , "tom.shafer@elderresearch.com", c("aut", "cre")),
     person("Robert", "Robison", , "robert.robison@elderresearch.com", "aut"),
