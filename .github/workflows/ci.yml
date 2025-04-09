@@ -1,0 +1,73 @@
+name: R-CMD-check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  R-CMD-check:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    strategy:
+      matrix:
+        config:
+          - {os: ubuntu-latest,   r: 'release'}
+          - {os: windows-latest,  r: 'release'}
+          - {os: macos-latest,    r: 'release'}
+          - {os: ubuntu-latest,   r: 'devel'}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: rcmdcheck, lintr, covr, pkgload
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Lint
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        # Need pkgload to find internal functions
+        # https://github.com/r-lib/lintr/issues/2589#issuecomment-2139515685
+        run: |
+          pkgload::load_all()
+          lintr::lint_package()
+        shell: Rscript {0}
+
+      - name: Test coverage
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        run: |
+          cov <- covr::package_coverage()
+          covr::report(cov, file = "coverage.html")
+        shell: Rscript {0}
+
+      - name: Upload coverage report
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-coverage-report
+          path: coverage.html
+          if-no-files-found: error
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check

@@ -25,7 +25,7 @@ figures. Smaller sizes, like 10 pt, are be better suited for
 print or presented figures.}
 
 \item{base_family}{Font family. If not specified then
-\link{ggplot2} default fonts are used.}
+\link[ggplot2:ggplot2-package]{ggplot2::ggplot2-package} default fonts are used.}
 
 \item{base_line_size}{Base line width. If not specified, this
 is computed such that the base line width at 10 pt is 0.3 mm.}
@@ -50,11 +50,11 @@ A simple, flexible \link{ggplot2} theme based on
 simple defaults.
 }
 \details{
-As in other \link{ggplot2} themes, baseline theme settings can be
-specified via function arguments. These value are propagated
-downwards through the theme, and as far as possible downstream
-element sizes, faces, etc. are defined relative to these base
-values.
+As in other \link{ggplot2} themes, baseline theme
+settings can be specified via function arguments. These value are
+propagated downwards through the theme, and as far as possible
+downstream element sizes, faces, etc. are defined relative to these
+base values.
 }
 \examples{
 \dontrun{
