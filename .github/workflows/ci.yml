@@ -51,20 +51,20 @@ jobs:
           covr::report(cov, file = "coverage.html")
         shell: Rscript {0}
 
-#       - name: Upload coverage report
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: coverage-report
-#           path: coverage.html
-#           if-no-files-found: error
-#
-#       - name: Install package
-#         run: R CMD INSTALL .
-#         shell: Rscript {0}
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.html
+          if-no-files-found: error
 
-#       - name: Upload check results
-#         if: failure()
-#         uses: actions/upload-artifact@v3
-#         with:
-#           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-#           path: check
+      - name: Install package
+        run: R CMD INSTALL .
+        shell: Rscript {0}
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check
