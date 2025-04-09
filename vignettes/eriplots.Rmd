@@ -11,10 +11,10 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 5, 
-  fig.height = 3, 
-  fig.dpi = 192, 
-  fig.align = "center", 
+  fig.width = 5,
+  fig.height = 3,
+  fig.dpi = 192,
+  fig.align = "center",
   out.width = 480
 )
 ```
@@ -56,8 +56,8 @@ plotdata$manufacturer <- with(plotdata, reorder(factor(manufacturer), cty))
 
 eriplot(plotdata, aes(cty, manufacturer, fill = cty)) +
   geom_col(color = "black", linewidth = 0.2) +
-  scale_fill_viridis_c() + 
-  scale_x_continuous(breaks = seq(-6, 9, 3), limits = c(-6 ,9)) + 
+  scale_fill_viridis_c() +
+  scale_x_continuous(breaks = seq(-6, 9, 3), limits = c(-6, 9)) +
   coord_capped_cart()
 ```
 
@@ -68,9 +68,9 @@ manually:
 ggplot(plotdata, aes(cty, manufacturer, fill = cty)) +
   geom_col(color = "black", linewidth = 0.2) +
   scale_fill_viridis_c() +
-  scale_x_continuous(breaks = seq(-6, 9, 3), limits = c(-6 ,9)) + 
+  scale_x_continuous(breaks = seq(-6, 9, 3), limits = c(-6, 9)) +
   format_minus_signs() +
-  coord_capped_cart() + 
+  coord_capped_cart() +
   theme_eri()
 ```
 
