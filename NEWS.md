@@ -1,4 +1,4 @@
-# eriplots (development version)
+# eriplots 0.1.1
 
 ## Added
 
