@@ -13,8 +13,8 @@ First package release!
 
 ## Added
 
-- A version of *[lemon][]*'s `coord_capped_cart()` that caps the
-  left and bottom axes by default
+- A version of *lemon*'s `coord_capped_cart()` that caps the left
+  and bottom axes by default
 - A function, `eriplot()` that sets theme styles by default and
   allows us to patch into plots directly
 - `fix_minus_signs()` and its "addable" sibling
@@ -25,5 +25,3 @@ First package release!
 - `theme_eri()` give a clean theme with customizable sizes. It
   also supports two profiles ("document" and "presentation") that
   set reasonable sizes for common cases
-
-[lemon]: https://github.com/stefanedwards/lemon
