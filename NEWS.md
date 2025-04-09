@@ -1,5 +1,10 @@
 # eriplots (development version)
 
+## Added
+
+- CI pipeline to run `R CMD CHECK`, lint, and report test
+  coverage
+
 # eriplots 0.1.0
 
 First package release!
