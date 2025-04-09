@@ -33,7 +33,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: rcmdcheck, lintr, covr
+          extra-packages: rcmdcheck, lintr, covr, pkgload
 
       - name: Check
         env:
@@ -42,7 +42,11 @@ jobs:
         shell: Rscript {0}
 
       - name: Lint
-        run: lintr::lint_package()
+        # Need pkgload to find internal functions
+        # https://github.com/r-lib/lintr/issues/2589#issuecomment-2139515685
+        run: |
+          pkgload::load_all()
+          lintr::lint_package()
         shell: Rscript {0}
 
       - name: Test coverage
