@@ -58,6 +58,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Upload coverage report
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
         uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-coverage-report
