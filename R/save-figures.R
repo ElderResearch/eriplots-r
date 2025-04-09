@@ -82,7 +82,7 @@ save_figures <- function(
 
     # Use cairo_pdf if we can, otherwise the default (NULL)
     dev <- NULL
-    if (fmt == "pdf" & isTRUE(capabilities("cairo"))) {
+    if (fmt == "pdf" && isTRUE(capabilities("cairo"))) {
       dev <- grDevices::cairo_pdf
     }
 
@@ -102,7 +102,7 @@ save_figures <- function(
     # Run optipng if we have it and if this is a PNG.
     # If TRUE, report errors if optipng fails
     # If "is_available", hide the warnings
-    if (fmt == "png" & !isFALSE(optipng)) {
+    if (fmt == "png" && !isFALSE(optipng)) {
       message("Optimizing ", out)
       wrapper <- if (optipng == "if_available") suppressWarnings else identity
       wrapper(system2("optipng", out, stdout = NULL, stderr = NULL))

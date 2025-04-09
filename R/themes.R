@@ -15,11 +15,11 @@
 #' [`theme_minimal()`][ggplot2::theme_minimal()]. Provides clean,
 #' simple defaults.
 #'
-#' As in other [ggplot2] themes, baseline theme settings can be
-#' specified via function arguments. These value are propagated
-#' downwards through the theme, and as far as possible downstream
-#' element sizes, faces, etc. are defined relative to these base
-#' values.
+#' As in other [ggplot2] themes, baseline theme
+#' settings can be specified via function arguments. These value are
+#' propagated downwards through the theme, and as far as possible
+#' downstream element sizes, faces, etc. are defined relative to these
+#' base values.
 #'
 #' @param profile One of "none", "presentation", or "document".
 #'  Sets the text size and other parameters to support the
@@ -30,7 +30,7 @@
 #'  figures. Smaller sizes, like 10 pt, are be better suited for
 #'  print or presented figures.
 #' @param base_family Font family. If not specified then
-#'  [ggplot2] default fonts are used.
+#'  [ggplot2::ggplot2-package] default fonts are used.
 #' @param base_line_size Base line width. If not specified, this
 #'  is computed such that the base line width at 10 pt is 0.3 mm.
 #' @param base_rect_size Base rectangle size. If not specified,
