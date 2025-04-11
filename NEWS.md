@@ -1,5 +1,10 @@
 # eriplots (development version)
 
+## Added
+
+- `alpha(n, max_opacity=0.85)` computes layer opacities such that
+  n layers stack with a cumulative `max_opacity`.
+
 # eriplots 0.1.1
 
 ## Added
