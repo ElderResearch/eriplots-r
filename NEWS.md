@@ -4,6 +4,14 @@
 
 - `alpha(n, max_opacity=0.85)` computes layer opacities such that
   n layers stack with a cumulative `max_opacity`.
+- New `set_default_profile()` function changes the option
+  `eriplots.eriplot.theme.default_profile` so that all plots in the
+  same session use this profile.
+
+## Changed
+
+- `save_figures()` correctly inherits the current plot theme, either
+  set via `options()`, `theme_eri()`, or `set_default_theme()`.
 
 # eriplots 0.1.1
 

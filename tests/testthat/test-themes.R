@@ -12,7 +12,7 @@ test_that("theme_eri sets appropriate profiles", {
   expect_equal(test_theme$text$size, 11)
 
   # Sizes
-  expected_sizes <- c(none = 11, presentation = 20, document = 10)
+  expected_sizes <- c(none = 11, presentation = 18, document = 10)
   for (i in seq_along(expected_sizes)) {
     textsize <- expected_sizes[i]
     profile <- names(textsize)
