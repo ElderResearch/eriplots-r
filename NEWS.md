@@ -1,5 +1,9 @@
 # eriplots (development version)
 
+## Changed
+
+- Changed the "presentation" profile to use 18pt text
+
 # eriplots 0.1.2
 
 ## Added
