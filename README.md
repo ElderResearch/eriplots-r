@@ -40,7 +40,7 @@ The _eriplots_ package provides customizable themes that support
 two "profiles" for common scenarios:
 
 1. **document**: 10 pt base type, 4.5 in × 2.5 in figure at 300 DPI
-2. **presentation**: 20 pt base type, 7 in × 4 in figure at 300 DPI
+2. **presentation**: 18 pt base type, 7 in × 4 in figure at 300 DPI
 
 If no profile is selected, a default text size is selected for
 interactive work. This theme applies a clean style with
