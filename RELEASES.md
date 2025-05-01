@@ -8,9 +8,8 @@ _On the `develop` branch._
 
 ### Version and news
 
-- [ ] Bump version with `usethis::use_version()`
 - [ ] Check that NEWS.md is current
-- [ ] Change the development version heading to the new version
+- [ ] Bump version with `usethis::use_version()`
 
 ### Merge to `main`
 
