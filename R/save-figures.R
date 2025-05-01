@@ -1,4 +1,4 @@
-#' Save [ggplot2] figures in multiple formats
+#' Save \pkg{ggplot2} figures in multiple formats
 #'
 #' Save ggplot2 plots in multiple formats (PNG and PDF by default)
 #' with options for dimension control, optimization, and theme-based
@@ -51,7 +51,13 @@ save_figures <- function(
   dest_base <- tools::file_path_sans_ext(destination)
 
   # Set up dimensions and units from profile
-  profile <- profile %||% attr(plot$theme, "eri_theme_profile") %||% "none"
+  # NB: the option can be re-set with theme_eri()
+  profile <- (
+    profile %||%
+      attr(plot$theme, "eri_theme_profile") %||%
+      getOption("eriplots.eriplot.theme.default_profile", default = "none")
+  )
+
   units <- match.arg(units)
 
   if (!is.null(width) || !is.null(height)) {

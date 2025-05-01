@@ -2,7 +2,7 @@
 % Please edit documentation in R/save-figures.R
 \name{save_figures}
 \alias{save_figures}
-\title{Save \link{ggplot2} figures in multiple formats}
+\title{Save \pkg{ggplot2} figures in multiple formats}
 \usage{
 save_figures(
   destination,

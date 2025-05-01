@@ -4,22 +4,21 @@
 # Profile values
 .theme_profiles <- list(
   none = list(text_size = 11, width = NA, height = NA),
-  presentation = list(text_size = 20, width = 7, height = 4, units = "in"),
+  presentation = list(text_size = 18, width = 7, height = 4, units = "in"),
   document = list(text_size = 10, width = 4.5, height = 2.5, units = "in")
 )
 
 
-#' Clean baseline [ggplot2] theme
+#' Clean baseline \pkg{ggplot2} theme
 #'
-#' A simple, flexible [ggplot2] theme based on
+#' A simple, flexible \pkg{ggplot2} theme based on
 #' [`theme_minimal()`][ggplot2::theme_minimal()]. Provides clean,
 #' simple defaults.
 #'
-#' As in other [ggplot2] themes, baseline theme
-#' settings can be specified via function arguments. These value are
-#' propagated downwards through the theme, and as far as possible
-#' downstream element sizes, faces, etc. are defined relative to these
-#' base values.
+#' As in other ggplot2 themes, baseline theme settings can be specified
+#' via function arguments. These value are propagated downwards through
+#' the theme, and as far as possible downstream element sizes, faces,
+#' etc. are defined relative to these base values.
 #'
 #' @param profile One of "none", "presentation", or "document".
 #'  Sets the text size and other parameters to support the
@@ -58,14 +57,21 @@
 #' theme_set(theme_eri(base_family = "serif"))
 #' }
 theme_eri <- function(
-    profile = c("none", "presentation", "document"),
+    profile = NULL,
     base_size = NULL,
     base_family = NULL,
     base_line_size = NULL,
     base_rect_size = NULL,
     aspect = NULL) {
+
   # Set the profile
-  profile <- match.arg(profile)
+  # Update the option so that save_figures() does the right thing
+  if (is.null(profile)) {
+    profile <- getOption("eriplots.eriplot.theme.default_profile", default = "none")
+  } else {
+    profile <- match.arg(profile, c("none", "presentation", "document"))
+  }
+
   theme_text_size <- .theme_profiles[[profile]][["text_size"]]
 
   # Set any defaults that are not missing
@@ -121,4 +127,17 @@ theme_eri <- function(
   attr(new_theme, "eri_theme_profile") <- profile
 
   new_theme
+}
+
+
+#' Set the default profile for new figures
+#'
+#' @param profile One of "none", "presentation", and "document".
+#'
+#' @returns The new profile name, invisibly.
+#' @export
+set_default_profile <- function(profile = c("none", "presentation", "document")) {
+  profile <- match.arg(profile)
+  options(eriplots.eriplot.theme.default_profile = profile)
+  invisible(profile)
 }

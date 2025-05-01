@@ -4,7 +4,7 @@
 \name{eriplots-package}
 \alias{eriplots}
 \alias{eriplots-package}
-\title{eriplots: Simple, clean plotting tools}
+\title{eriplots: Simple, Clean Plotting Tools}
 \description{
 The eriplots package provides a collection of tools for creating clean and consistent plots using ggplot2 and base R graphics. The package also provides a standardized theme and tools for saving figures that make it easier to follow good practices.
 }

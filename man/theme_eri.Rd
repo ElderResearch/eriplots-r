@@ -2,10 +2,10 @@
 % Please edit documentation in R/themes.R
 \name{theme_eri}
 \alias{theme_eri}
-\title{Clean baseline \link{ggplot2} theme}
+\title{Clean baseline \pkg{ggplot2} theme}
 \usage{
 theme_eri(
-  profile = c("none", "presentation", "document"),
+  profile = NULL,
   base_size = NULL,
   base_family = NULL,
   base_line_size = NULL,
@@ -45,16 +45,15 @@ figure's left and right or top and bottom edges.}
 A ggplot2 \link[ggplot2:theme]{theme}.
 }
 \description{
-A simple, flexible \link{ggplot2} theme based on
+A simple, flexible \pkg{ggplot2} theme based on
 \code{\link[ggplot2:ggtheme]{theme_minimal()}}. Provides clean,
 simple defaults.
 }
 \details{
-As in other \link{ggplot2} themes, baseline theme
-settings can be specified via function arguments. These value are
-propagated downwards through the theme, and as far as possible
-downstream element sizes, faces, etc. are defined relative to these
-base values.
+As in other ggplot2 themes, baseline theme settings can be specified
+via function arguments. These value are propagated downwards through
+the theme, and as far as possible downstream element sizes, faces,
+etc. are defined relative to these base values.
 }
 \examples{
 \dontrun{
