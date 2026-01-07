@@ -1,6 +1,6 @@
 Package: eriplots
 Title: Simple, Clean Plotting Tools
-Version: 0.1.2.9000
+Version: 0.1.2.9001
 Authors@R: c(
     person("Tom", "Shafer",     , "tom.shafer@elderresearch.com", c("aut", "cre")),
     person("Robert", "Robison", , "robert.robison@elderresearch.com", "aut"),
@@ -25,6 +25,7 @@ VignetteBuilder: knitr
 Suggests:
     knitr,
     png,
+    ragg,
     rmarkdown,
     testthat (>= 3.0.0),
     withr

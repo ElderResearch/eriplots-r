@@ -97,3 +97,17 @@ test_that("save_figures inherits options correctly", {
     "presentation"
   )
 })
+
+test_that("save_figures uses ragg for WebP output when requested", {
+  skip_if_not_installed("ragg")
+
+  imgfile <- local_file("example-image.webp")
+
+  plot <- ggplot(data.frame(x = 1:3, y = 1:3), aes(x, y)) +
+    geom_point()
+
+  save_figures(imgfile, plot, formats = "webp", optipng = FALSE)
+
+  expect_true(file.exists(imgfile))
+  expect_gt(file.size(imgfile), 0)
+})

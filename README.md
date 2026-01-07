@@ -25,6 +25,7 @@ remotes::install_github("ElderResearch/eriplots-r")
 ```
 
 [remotes]: https://remotes.r-lib.org/
+[ragg]: https://ragg.r-lib.org/
 
 ## Features
 
@@ -85,8 +86,10 @@ ggplot(example, aes(cty, manufacturer, fill = cty)) +
 
 ### Multi-Format Figures
 
-The _eriplots_ library provides functions to save figures in
-multiple formats with automatic PNG compression when available.
+The _eriplots_ library provides functions to save figures in multiple
+formats with automatic PNG compression when available. When you
+request WebP output, `save_figures()` uses the [ragg][] backend (if
+installed) to produce high-quality files.
 
 ```r
 # Save in multiple formats (PNG and PDF by default)
@@ -94,6 +97,9 @@ save_figures(p, "plot")
 
 # Specify formats
 save_figures(p, "plot", formats = c("png", "pdf"))
+
+# Request WebP along with another format (requires ragg)
+save_figures(p, "plot", formats = c("png", "webp"))
 
 # Disable PNG optimization
 save_figures(p, "plot", optimize = FALSE)

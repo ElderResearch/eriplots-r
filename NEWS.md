@@ -1,5 +1,10 @@
 # eriplots (development version)
 
+## Added
+
+- `save_figures()` can now render WebP figures via `ragg::agg_webp()`
+  when `"webp"` is included in `formats`.
+
 ## Changed
 
 - Changed the "presentation" profile to use 18pt text

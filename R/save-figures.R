@@ -1,13 +1,15 @@
 #' Save \pkg{ggplot2} figures in multiple formats
 #'
-#' Save ggplot2 plots in multiple formats (PNG and PDF by default)
-#' with options for dimension control, optimization, and theme-based
-#' profiles. When available, `optipng` is also applied.
+#' Save ggplot2 plots in multiple formats (PNG and PDF by default,
+#' with optional WebP support via [ragg::agg_webp()]) with options for
+#' dimension control, optimization, and theme-based profiles. When
+#' available, `optipng` is also applied.
 #'
 #' @param destination Where the figure(s) should be saved.
 #' @param plot Plot object to save.
 #' @param profile Theme profile (defaults to the plot's theme profile or "none").
 #' @param formats Format(s) to save (default: c("png", "pdf")).
+#'   Requesting `"webp"` uses [ragg::agg_webp()] when available.
 #' @param width Plot width (optional, overrides profile settings).
 #' @param height Plot height (optional, overrides profile settings).
 #' @param units Dimension units (default: "in").
@@ -86,10 +88,18 @@ save_figures <- function(
     out <- paste0(dest_base, ".", fmt)
     outfiles <- c(outfiles, out)
 
-    # Use cairo_pdf if we can, otherwise the default (NULL)
+    # Pick a device when we need a specific backend
     dev <- NULL
     if (fmt == "pdf" && isTRUE(capabilities("cairo"))) {
       dev <- grDevices::cairo_pdf
+    } else if (fmt == "webp") {
+      if (!requireNamespace("ragg", quietly = TRUE)) {
+        stop(
+          "Saving WebP figures requires the 'ragg' package. ",
+          "Install it via install.packages('ragg') before continuing."
+        )
+      }
+      dev <- ragg::agg_webp
     }
 
     args <- list(
