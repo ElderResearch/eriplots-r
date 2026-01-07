@@ -24,8 +24,10 @@ save_figures(
 
 \item{profile}{Theme profile (defaults to the plot's theme profile or "none").}
 
-\item{formats}{Format(s) to save (default: c("png", "pdf")).
-Requesting \code{"webp"} uses \code{\link[ragg:agg_webp]{ragg::agg_webp()}} when available.}
+\item{formats}{Format(s) to save (default: c("png", "pdf")). When not
+provided, a recognized file extension in \code{destination} is added to
+the formats to save. Requesting \code{"webp"} uses \code{\link[ragg:agg_webp]{ragg::agg_webp()}}
+when available.}
 
 \item{width}{Plot width (optional, overrides profile settings).}
 

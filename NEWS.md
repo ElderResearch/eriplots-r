@@ -1,4 +1,4 @@
-# eriplots (development version)
+# eriplots 0.2.0
 
 ## Added
 
@@ -8,6 +8,9 @@
 ## Changed
 
 - Changed the "presentation" profile to use 18pt text
+- `save_figures()` now ensures that the requested file type (e.g.,
+  WebP for 'out.webp') is added to the output format list if `format`
+  is not explicitly specified.
 
 # eriplots 0.1.2
 

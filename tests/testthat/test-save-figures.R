@@ -3,6 +3,7 @@ skip_on_ci()
 skip_on_cran()
 skip_if_not_installed("withr")
 
+library(testthat)
 library(ggplot2)
 library(withr)
 
@@ -110,4 +111,48 @@ test_that("save_figures uses ragg for WebP output when requested", {
 
   expect_true(file.exists(imgfile))
   expect_gt(file.size(imgfile), 0)
+})
+
+test_that("save_figures infers format from destination extension", {
+  skip_if_not_installed("ragg")
+
+  imgfile <- local_file("implicit-image.webp")
+
+  plot <- ggplot(data.frame(x = 1:3, y = 1:3), aes(x, y)) +
+    geom_point()
+
+  files <- save_figures(imgfile, plot, optipng = FALSE)
+
+  expect_true(any(endsWith(files, ".webp")))
+  expect_true(any(endsWith(files, ".png")))
+  expect_true(any(endsWith(files, ".pdf")))
+  expect_true(file.exists(imgfile))
+})
+
+test_that("save_figures leaves explicit formats unchanged", {
+  with_file("explicit-image.webp", {
+    f <- "explicit-image.webp"
+
+    plot <- ggplot(data.frame(x = 1:3, y = 1:3), aes(x, y)) +
+      geom_point()
+
+    files <- save_figures(f, plot, formats = "png", optipng = FALSE)
+
+    expect_true(all(endsWith(files, ".png")))
+    expect_false(file.exists("explicit-image.webp"))
+    expect_true(file.exists("explicit-image.png"))
+  })
+})
+
+test_that("save_figures warns on invalid format and skips it", {
+  plot <- ggplot(data.frame(x = 1:3, y = 1:3), aes(x, y)) + geom_point()
+
+  with_file("test-invalid.png", {
+    expect_warning(
+      files <- save_figures("test-invalid", plot, formats = c("png", "bmp"), optipng = FALSE),
+      "Format 'bmp' is not supported"
+    )
+    expect_equal(files, "test-invalid.png")
+    expect_true(file.exists("test-invalid.png"))
+  })
 })
