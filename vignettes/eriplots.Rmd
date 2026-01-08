@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   fig.height = 3,
   fig.dpi = 192,
   fig.align = "center",
-  out.width = 480
+  out.width = "480px"
 )
 ```
 
@@ -58,7 +58,7 @@ eriplot(plotdata, aes(cty, manufacturer, fill = cty)) +
   geom_col(color = "black", linewidth = 0.2) +
   scale_fill_viridis_c() +
   scale_x_continuous(breaks = seq(-6, 9, 3), limits = c(-6, 9)) +
-  coord_capped_cart()
+  guides(x = guide_axis(cap = "both"), y = guide_axis(cap = "both"))
 ```
 
 Or, we can continue to use *ggplot2* directly and add the various pieces
@@ -70,7 +70,7 @@ ggplot(plotdata, aes(cty, manufacturer, fill = cty)) +
   scale_fill_viridis_c() +
   scale_x_continuous(breaks = seq(-6, 9, 3), limits = c(-6, 9)) +
   format_minus_signs() +
-  coord_capped_cart() +
+  guides(x = guide_axis(cap = "both"), y = guide_axis(cap = "both")) +
   theme_eri()
 ```
 
@@ -104,8 +104,10 @@ which works with ERI theme profiles to save figures at sizes that work
 well for a given destination format (presentation or document). By
 default, `save_figures()` will attempt to create raster (PNG) and vector
 (PDF) versions of your plot at default sizes and resolutions, but these
-settings can be customized as needed. (And `ggplot2::ggsave()` will
-still work just fine, too.)
+settings can be customized as needed. If you also need WebP output,
+include `"webp"` in `formats` and `save_figures()` will use
+[`ragg::agg_webp()`](https://ragg.r-lib.org/) (when available) to render
+it. (And `ggplot2::ggsave()` will still work just fine, too.)
 
 ```{r, eval=FALSE}
 # Create figure
@@ -116,6 +118,9 @@ eriplot(plotdata, aes(cty, manufacturer, fill = cty)) +
 
 # Save example.pdf and example.png
 save_figures("example.png", formats = c("pdf", "png"))
+
+# Save a WebP copy (requires the ragg package)
+save_figures("example.png", formats = c("webp"))
 ```
 
 Raster figures are saved at 300 DPI by default for high-quality,

@@ -9,6 +9,7 @@ _On the `develop` branch._
 ### Version and news
 
 - [ ] Check that NEWS.md is current
+- [ ] Check that the README is current
 - [ ] Bump version with `usethis::use_version()`
 
 ### Merge to `main`

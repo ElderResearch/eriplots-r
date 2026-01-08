@@ -1,3 +1,23 @@
+# eriplots 0.2.0
+
+## Added
+
+- `save_figures()` can now render WebP figures via `ragg::agg_webp()`
+  when `"webp"` is included in `formats`.
+
+## Changed
+
+- Changed the "presentation" profile to use 18pt text
+- `save_figures()` now ensures that the requested file type (e.g.,
+  WebP for 'out.webp') is added to the output format list if `format`
+  is not explicitly specified.
+
+## Removed
+
+- Removed `coord_capped_cart()` in favor of native ggplot2 support via
+ `guides(x = guide_axis(cap = "both"))` (package now requires ggplot2
+ >= 3.5.0).
+
 # eriplots 0.1.2
 
 ## Added
@@ -25,8 +45,7 @@ First package release!
 
 ## Added
 
-- A version of *lemon*'s `coord_capped_cart()` that caps the left and
-  bottom axes by default
+- *(Removed in 0.2.0)* A version of *lemon*'s `coord_capped_cart()`
 - A function, `eriplot()` that sets theme styles by default and allows
   us to patch into plots directly
 - `fix_minus_signs()` and its "addable" sibling `format_minus_signs()`

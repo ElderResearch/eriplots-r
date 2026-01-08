@@ -1,6 +1,6 @@
 Package: eriplots
 Title: Simple, Clean Plotting Tools
-Version: 0.1.2
+Version: 0.2.0
 Authors@R: c(
     person("Tom", "Shafer",     , "tom.shafer@elderresearch.com", c("aut", "cre")),
     person("Robert", "Robison", , "robert.robison@elderresearch.com", "aut"),
@@ -16,8 +16,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports:
-    ggplot2,
-    lemon,
+    ggplot2 (>= 3.5.0),
     scales
 Depends:
     R (>= 3.5)
@@ -25,6 +24,7 @@ VignetteBuilder: knitr
 Suggests:
     knitr,
     png,
+    ragg,
     rmarkdown,
     testthat (>= 3.0.0),
     withr

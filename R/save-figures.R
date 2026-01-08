@@ -1,13 +1,17 @@
 #' Save \pkg{ggplot2} figures in multiple formats
 #'
-#' Save ggplot2 plots in multiple formats (PNG and PDF by default)
-#' with options for dimension control, optimization, and theme-based
-#' profiles. When available, `optipng` is also applied.
+#' Save ggplot2 plots in multiple formats (PNG and PDF by default,
+#' with optional WebP support via [ragg::agg_webp()]) with options for
+#' dimension control, optimization, and theme-based profiles. When
+#' available, `optipng` is also applied.
 #'
 #' @param destination Where the figure(s) should be saved.
 #' @param plot Plot object to save.
 #' @param profile Theme profile (defaults to the plot's theme profile or "none").
-#' @param formats Format(s) to save (default: c("png", "pdf")).
+#' @param formats Format(s) to save (default: c("png", "pdf")). When not
+#'   provided, a recognized file extension in `destination` is added to
+#'   the formats to save. Requesting `"webp"` uses [ragg::agg_webp()]
+#'   when available.
 #' @param width Plot width (optional, overrides profile settings).
 #' @param height Plot height (optional, overrides profile settings).
 #' @param units Dimension units (default: "in").
@@ -50,6 +54,16 @@ save_figures <- function(
     ...) {
   dest_base <- tools::file_path_sans_ext(destination)
 
+  # If formats were not provided, incorporate a known destination extension
+  known_formats <- c("png", "pdf", "webp", "jpg", "jpeg", "tif", "tiff", "svg")
+
+  ext <- tolower(tools::file_ext(destination))
+  if (missing(formats) && nzchar(ext)) {
+    if (ext %in% known_formats) {
+      formats <- unique(c(ext, formats))
+    }
+  }
+
   # Set up dimensions and units from profile
   # NB: the option can be re-set with theme_eri()
   profile <- (
@@ -83,13 +97,26 @@ save_figures <- function(
   outfiles <- c()
 
   for (fmt in tolower(formats)) {
+    if (!fmt %in% known_formats) {
+      warning(sprintf("Format '%s' is not supported.", fmt))
+      next()
+    }
+
     out <- paste0(dest_base, ".", fmt)
     outfiles <- c(outfiles, out)
 
-    # Use cairo_pdf if we can, otherwise the default (NULL)
+    # Pick a device when we need a specific backend
     dev <- NULL
     if (fmt == "pdf" && isTRUE(capabilities("cairo"))) {
       dev <- grDevices::cairo_pdf
+    } else if (fmt == "webp") {
+      if (!requireNamespace("ragg", quietly = TRUE)) {
+        stop(
+          "Saving WebP figures requires the 'ragg' package. ",
+          "Install it via install.packages('ragg') before continuing."
+        )
+      }
+      dev <- ragg::agg_webp
     }
 
     args <- list(

@@ -25,6 +25,7 @@ remotes::install_github("ElderResearch/eriplots-r")
 ```
 
 [remotes]: https://remotes.r-lib.org/
+[ragg]: https://ragg.r-lib.org/
 
 ## Features
 
@@ -40,7 +41,7 @@ The _eriplots_ package provides customizable themes that support
 two "profiles" for common scenarios:
 
 1. **document**: 10 pt base type, 4.5 in × 2.5 in figure at 300 DPI
-2. **presentation**: 20 pt base type, 7 in × 4 in figure at 300 DPI
+2. **presentation**: 18 pt base type, 7 in × 4 in figure at 300 DPI
 
 If no profile is selected, a default text size is selected for
 interactive work. This theme applies a clean style with
@@ -85,8 +86,10 @@ ggplot(example, aes(cty, manufacturer, fill = cty)) +
 
 ### Multi-Format Figures
 
-The _eriplots_ library provides functions to save figures in
-multiple formats with automatic PNG compression when available.
+The _eriplots_ library provides functions to save figures in multiple
+formats with automatic PNG compression when available. When you
+request WebP output, `save_figures()` uses the [ragg][] backend (if
+installed) to produce high-quality files.
 
 ```r
 # Save in multiple formats (PNG and PDF by default)
@@ -94,6 +97,9 @@ save_figures(p, "plot")
 
 # Specify formats
 save_figures(p, "plot", formats = c("png", "pdf"))
+
+# Request WebP along with another format (requires ragg)
+save_figures(p, "plot", formats = c("png", "webp"))
 
 # Disable PNG optimization
 save_figures(p, "plot", optimize = FALSE)

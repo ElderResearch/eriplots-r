@@ -24,7 +24,10 @@ save_figures(
 
 \item{profile}{Theme profile (defaults to the plot's theme profile or "none").}
 
-\item{formats}{Format(s) to save (default: c("png", "pdf")).}
+\item{formats}{Format(s) to save (default: c("png", "pdf")). When not
+provided, a recognized file extension in \code{destination} is added to
+the formats to save. Requesting \code{"webp"} uses \code{\link[ragg:agg_webp]{ragg::agg_webp()}}
+when available.}
 
 \item{width}{Plot width (optional, overrides profile settings).}
 
@@ -42,9 +45,10 @@ save_figures(
 Invisibly returns a vector of paths to the saved files.
 }
 \description{
-Save ggplot2 plots in multiple formats (PNG and PDF by default)
-with options for dimension control, optimization, and theme-based
-profiles. When available, \code{optipng} is also applied.
+Save ggplot2 plots in multiple formats (PNG and PDF by default,
+with optional WebP support via \code{\link[ragg:agg_webp]{ragg::agg_webp()}}) with options for
+dimension control, optimization, and theme-based profiles. When
+available, \code{optipng} is also applied.
 }
 \examples{
 \dontrun{
