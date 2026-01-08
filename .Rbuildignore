@@ -4,3 +4,4 @@
 ^\.lintr$
 ^LICENSE\.md$
 ^RELEASES\.md$
+^justfile$
