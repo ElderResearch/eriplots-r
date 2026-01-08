@@ -113,8 +113,6 @@ theme_eri <- function(
     axis.line = ggplot2::element_line(color = lims_gray, lineend = "square"),
     axis.ticks = ggplot2::element_line(color = lims_gray, lineend = "square"),
     axis.ticks.length = ggplot2::unit(tick_size, "pt"),
-    # For lemon::coord_capped_cart()
-    panel.border = ggplot2::element_blank(),
     # No grid by default
     panel.grid = ggplot2::element_blank(),
     # Right-justify legend text
